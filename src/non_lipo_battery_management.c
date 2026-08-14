@@ -20,6 +20,12 @@
 #include <zmk/pm.h>
 #include <zmk/usb.h>
 
+#ifdef CONFIG_ADC_NRFX_SAADC
+#include <zephyr/dt-bindings/adc/nrf-adc.h>
+#else
+#error "This driver requires the nRF SAADC ADC driver to be enabled."
+#endif
+
 LOG_MODULE_REGISTER(zmk_battery_non_lipo, CONFIG_ZMK_LOG_LEVEL);
 
 #if IS_ENABLED(CONFIG_ZMK_NON_LIPO_ADV_SLEEP_TIMEOUT)
@@ -264,7 +270,7 @@ static int non_lipo_init(const struct device *dev) {
         .gain = ADC_GAIN_1_6,
         .reference = ADC_REF_INTERNAL,
         .acquisition_time = ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS, 40),
-        .input_positive = SAADC_CH_PSELP_PSELP_AnalogInput0 + drv_cfg->io_channel.channel,
+        .input_positive = NRF_SAADC_AIN0 + drv_cfg->io_channel.channel,
     };
 
     drv_data->as.resolution = 12;
