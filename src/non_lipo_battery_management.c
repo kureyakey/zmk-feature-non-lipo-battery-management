@@ -270,7 +270,7 @@ static int non_lipo_init(const struct device *dev) {
         .gain = ADC_GAIN_1_6,
         .reference = ADC_REF_INTERNAL,
         .acquisition_time = ADC_ACQ_TIME(ADC_ACQ_TIME_MICROSECONDS, 40),
-        .input_positive = NRF_SAADC_AIN0 + drv_cfg->io_channel.channel,
+        .input_positive = NRF_SAADC_INPUT_AIN0 + drv_cfg->io_channel.channel,
     };
 
     drv_data->as.resolution = 12;
